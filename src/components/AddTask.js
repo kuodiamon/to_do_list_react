@@ -1,6 +1,10 @@
 /** @format */
 import addIcon from "../assets/icon/add.png";
 import styled from "styled-components";
+import * as actions from "../actions/todos";
+
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,10 +42,28 @@ const AddBtn = styled.button`
 `;
 
 function AddTask() {
+  const dispatch = useDispatch();
+
+  const [newTask, setnewTask] = useState("");
+
+  const handleChange = (event) => {
+    setnewTask(event.target.value);
+  };
+
+  const handleClick = (event) => {
+    if (newTask === "") return; //檢查有沒有輸入任務名稱
+    dispatch(actions.addTask(newTask));
+    setnewTask("");
+  };
   return (
     <Wrapper>
-      <Input type="text" placeholder={"Add new task ..."} />
-      <AddBtn>
+      <Input
+        type="text"
+        placeholder={"Add new task ..."}
+        value={newTask}
+        onChange={handleChange}
+      />
+      <AddBtn onClick={() => handleClick()}>
         <img src={addIcon} alt="" />
       </AddBtn>
     </Wrapper>

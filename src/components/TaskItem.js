@@ -1,7 +1,10 @@
 /** @format */
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+import { useDispatch } from "react-redux";
+import * as actions from "../actions/todos";
+
+const Container = styled.div`
   background-color: white;
   width: 80%;
   height: 60px;
@@ -12,7 +15,7 @@ const Wrapper = styled.div`
   padding: 0 20px;
 `;
 
-const CheckBox = styled.input.attrs({ type: 'checkbox' })`
+const CheckBox = styled.input.attrs({ type: "checkbox" })`
   width: 18px;
   height: 18px;
   cursor: pointer;
@@ -34,17 +37,18 @@ const Button = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: #F5727E;
+    background-color: #f5727e;
   }
 `;
 
-function TaskItem() {
+function TaskItem(props) {
+  const dispatch = useDispatch();
   return (
-    <Wrapper>
-      <CheckBox type="checkbox" />
-      <TaskName>TaskName</TaskName>
-      <Button>Delete</Button>
-    </Wrapper>
+    <Container>
+      <CheckBox type="checkbox" checked={props.task.isCompleted} />
+      <TaskName>{props.task.taskName}</TaskName>
+      <Button onClick={() => dispatch(actions.deleteTask(props.task.idx))}>Delete</Button>
+    </Container>
   );
 }
 

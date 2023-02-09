@@ -1,7 +1,11 @@
-import Filter from './Filter'
-import TaskItem from './TaskItem'
+/** @format */
+
+import Filter from "./Filter";
+import TaskItem from "./TaskItem";
 
 import styled from "styled-components";
+
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -20,16 +24,28 @@ const TaskItemContainer = styled.div`
 `;
 
 function TaskList() {
+  const tasks = useSelector((store) => store.todosReducer);
+
+  const renderItems = () => {
+    let list = [];
+    tasks.forEach((item, index) => {
+      list.push(
+        <TaskItem key={item.taskName} task={{ ...item, idx: index }} />
+      );
+    });
+    return list;
+  };
   return (
     <Wrapper>
-    <Filter />
-    <TaskItemContainer>
+      <Filter />
+      {/* <TaskItemContainer> */}
+      {/* <TaskItem />
         <TaskItem />
-        <TaskItem />
-        <TaskItem />
-    </TaskItemContainer>
-  </Wrapper>
-  )
+        <TaskItem /> */}
+      {/* </TaskItemContainer> */}
+      <TaskItemContainer>{renderItems()}</TaskItemContainer>
+    </Wrapper>
+  );
 }
 
-export default TaskList
+export default TaskList;
