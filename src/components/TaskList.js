@@ -25,19 +25,26 @@ const TaskItemContainer = styled.div`
 
 function TaskList() {
   const tasks = useSelector((store) => store.todosReducer);
+  const filter = useSelector((store) => store.filterReducer);
 
   const renderItems = () => {
     let list = [];
     tasks.forEach((item, index) => {
-      list.push(
-        <TaskItem key={item.taskName} task={{ ...item, idx: index }} />
-      );
+      if (
+        filter === "SHOW_ALL" ||
+        (filter === "SHOW_TODO" && !item.isCompleted) ||
+        (filter === "SHOW_DONE" && item.isCompleted)
+      ) {
+        list.push(
+          <TaskItem key={item.taskName} task={{ ...item, idx: index }} />
+        );
+      }
     });
     return list;
   };
   return (
     <Wrapper>
-      <Filter />
+      <Filter selected={filter} />
       {/* <TaskItemContainer> */}
       {/* <TaskItem />
         <TaskItem />

@@ -13,3 +13,10 @@ export function deleteTask(idx){
         idx
     };
 }
+
+export function toggleTask(idx){
+    return {
+        type: types.TOGGLE_TASK,
+        idx
+    };
+}

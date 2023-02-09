@@ -45,9 +45,15 @@ function TaskItem(props) {
   const dispatch = useDispatch();
   return (
     <Container>
-      <CheckBox type="checkbox" checked={props.task.isCompleted} />
+      <CheckBox
+        type="checkbox"
+        checked={props.task.isCompleted}
+        onChange={() => dispatch(actions.toggleTask(props.task.idx))}
+      />
       <TaskName>{props.task.taskName}</TaskName>
-      <Button onClick={() => dispatch(actions.deleteTask(props.task.idx))}>Delete</Button>
+      <Button onClick={() => dispatch(actions.deleteTask(props.task.idx))}>
+        Delete
+      </Button>
     </Container>
   );
 }
